@@ -52,18 +52,7 @@ map.on( "load", () => {
 				essential: true,
 			} )
 
-			fetch( "http://localhost:3000/me", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify( {
-					lon: longitude,
-					lat: latitude,
-				} )
-			} )
-			.then( response => response.json() )
-			.then( json => console.log( json ) )
+			server.send( [ longitude, latitude ] )
 
 			console.log( "Successfull" )
 		}
