@@ -1,6 +1,9 @@
 import "@app/ui.css"
 import "mapbox-gl/dist/mapbox-gl.css"
 import mapboxgl from "mapbox-gl"
+import { io } from "socket.io-client"
+
+const server = io( "http://localhost:3000" )
 
 const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoibmFqaW1vdiIsImEiOiJjbTBnbWJ3ZGwwMXdqMnFyMXlxY3FsaTJ6In0.TWo-dOdTkiREW-ugZQevpw"
 
@@ -11,8 +14,6 @@ const map = new mapboxgl.Map( {
 	zoom: 9,
 	hash: true,
 } )
-
-
 
 map.on( "load", () => {
 
@@ -50,6 +51,19 @@ map.on( "load", () => {
 				center: [ longitude, latitude ],
 				essential: true,
 			} )
+
+			fetch( "http://localhost:3000/me", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify( {
+					lon: longitude,
+					lat: latitude,
+				} )
+			} )
+			.then( response => response.json() )
+			.then( json => console.log( json ) )
 
 			console.log( "Successfull" )
 		}
