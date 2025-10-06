@@ -11,3 +11,35 @@ const map = new mapboxgl.Map( {
 	zoom: 9,
 	hash: true,
 } )
+
+const myPoint = { // GeoJSON
+	type: "Feature",
+	geometry: {
+		type: "Point",
+		coordinates: [ 69.24802011344485, 41.31697426358227 ],
+	},
+}
+
+map.on( "load", () => {
+
+	map.addSource( "myPoint", { type: "geojson", data: myPoint } )
+
+	map.addLayer( {
+		id: "myPoint",
+		source: "myPoint",
+		type: "circle",
+		paint: {
+			"circle-radius": 10,
+			"circle-color": "#ff00ff",
+			"circle-stroke-width": 4,
+			"circle-stroke-color": "#ffffff",
+		}
+	} )
+} )
+
+
+
+
+
+
+
